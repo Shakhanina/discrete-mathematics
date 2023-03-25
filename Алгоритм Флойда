@@ -1,0 +1,28 @@
+import math
+
+def path(p,u,v):
+    pa = [u]
+    while u != v:
+        u = p[u][v]
+        pa.append(u)
+    return pa
+
+v = [ [0,10,18,8,math.inf,math.inf],
+      [10,0,16,9,21,math.inf],
+      [math.inf,16,0,math.inf,math.inf,15],
+      [7,9,math.inf,0,math.inf,12],
+      [math.inf,math.inf,math.inf,math.inf,0,23],
+      [math.inf,math.inf,15,math.inf,23,0],
+    ]
+n = len(v)
+p =[[v for v in range(n)] for u in range(n)]
+for k in range(n):
+    for i in range(n):
+        for j in range(n):
+            d = v[i][k] + v[k][j]
+            if v[i][j] > d:
+                v[i][j] = d
+                p[i][j] = k
+V_0 = 1
+V_k = 5
+print(path(p, V_k ,V_0))
