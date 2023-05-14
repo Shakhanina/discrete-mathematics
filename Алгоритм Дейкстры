@@ -1,0 +1,41 @@
+import math
+
+def get_v(v,G):
+    for i,weight in enumerate(G[v]):
+        if weight > 0:
+            yield i
+
+def min_G(T,S):
+    mina = -1
+    m = max(T)
+    for i, t in enumerate(T):
+        if t < m and i not in S:
+            m = t
+            mina = i
+    return mina
+
+G =((0,2,2,0,0,7,0,0),
+    (2,0,2,9,0,2,0,0),
+    (2,2,0,0,0,5,0,0),
+    (0,9,0,0,5,10,2,16),
+    (0,0,0,5,0,0,0,17),
+    (7,2,5,10,0,0,9,0),
+    (0,0,0,2,0,9,0,17),
+    (0,0,0,16,17,0,17,0))
+
+N = len(G)
+T = [math.inf]*N
+v = 0
+S = {v}
+T[v] = 0
+
+while v != -1:
+    for j in get_v(v, G):
+        if j not in S:
+            w = T[v] + G[v][j]
+            if w < T[j]:
+                T[j] = w
+    v = min_G(T,S)
+    if v >0:
+        S.add(v)
+print(T)
