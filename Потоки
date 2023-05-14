@@ -1,0 +1,53 @@
+import math
+def f(s, n, r) -> list:
+    l = list[n - 1][s]
+    for i in range(len(list[n - 2])):
+        if list[n - 2][i] + listin[i][s] == l:
+            way.append(i)
+            return f(i, n - 1, r)
+    return way
+way = [2]
+list = []
+listin = [[math.inf, 16, 13, math.inf, math.inf,math.inf],
+         [math.inf, math.inf, 10, 12, math.inf,math.inf],
+         [math.inf, 4, math.inf, math.inf, 14,math.inf],
+         [math.inf, math.inf, 9, math.inf, math.inf,20],
+         [math.inf, math.inf, math.inf,7,math.inf, 4],
+         [math.inf, math.inf, math.inf, math.inf, math.inf,math.inf]
+        ]
+h = []
+result = []
+sum = 0
+while True:
+    m = [0, math.inf, math.inf, math.inf, math.inf]
+    for l in range(5):
+        if l == 0:
+            continue
+        for i in range(5):
+            if i == 0:
+                continue
+            for j in range(5):
+                h.append(m[j] + listin[j][i])
+            m[i] = min(h)
+            h = []
+        list.append(m[:])
+    result = m[:]
+
+    if result[2] == math.inf:
+        break
+
+    new_way = f(2, len(list), 0)[::-1]
+    ves = []
+    for i in range(len(new_way) - 1):
+        ves.append(listin[new_way[i]][new_way[i + 1]])
+
+    sum += min(ves)
+
+    for i in range(len(new_way) - 1):
+        listin[new_way[i]][new_way[i + 1]] -= min(ves)
+        if listin[new_way[i]][new_way[i + 1]] == 0:
+            listin[new_way[i]][new_way[i + 1]] = math.inf
+
+    way = [2]
+    list = []
+print(sum)
